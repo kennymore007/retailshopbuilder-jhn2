@@ -22,6 +22,10 @@ import { Route as CountryCodeStoreRouteImport } from './routes/$countryCode/stor
 import { Route as CountryCodeCheckoutRouteImport } from './routes/$countryCode/checkout'
 import { Route as CountryCodeCartRouteImport } from './routes/$countryCode/cart'
 import { Route as CountryCodeProductsHandleRouteImport } from './routes/$countryCode/products/$handle'
+import { Route as CountryCodeMarketplaceVehiclesRouteImport } from './routes/$countryCode/marketplace/vehicles'
+import { Route as CountryCodeMarketplaceStorageRouteImport } from './routes/$countryCode/marketplace/storage'
+import { Route as CountryCodeMarketplaceHarvestRouteImport } from './routes/$countryCode/marketplace/harvest'
+import { Route as CountryCodeMarketplaceEquipmentRouteImport } from './routes/$countryCode/marketplace/equipment'
 import { Route as CountryCodeCategoriesHandleRouteImport } from './routes/$countryCode/categories/$handle'
 import { Route as CountryCodeOrderOrderIdConfirmedRouteImport } from './routes/$countryCode/order/$orderId/confirmed'
 import { ServerRoute as HealthServerRouteImport } from './routes/health'
@@ -84,6 +88,30 @@ const CountryCodeProductsHandleRoute =
     path: '/products/$handle',
     getParentRoute: () => CountryCodeRoute,
   } as any)
+const CountryCodeMarketplaceVehiclesRoute =
+  CountryCodeMarketplaceVehiclesRouteImport.update({
+    id: '/marketplace/vehicles',
+    path: '/marketplace/vehicles',
+    getParentRoute: () => CountryCodeRoute,
+  } as any)
+const CountryCodeMarketplaceStorageRoute =
+  CountryCodeMarketplaceStorageRouteImport.update({
+    id: '/marketplace/storage',
+    path: '/marketplace/storage',
+    getParentRoute: () => CountryCodeRoute,
+  } as any)
+const CountryCodeMarketplaceHarvestRoute =
+  CountryCodeMarketplaceHarvestRouteImport.update({
+    id: '/marketplace/harvest',
+    path: '/marketplace/harvest',
+    getParentRoute: () => CountryCodeRoute,
+  } as any)
+const CountryCodeMarketplaceEquipmentRoute =
+  CountryCodeMarketplaceEquipmentRouteImport.update({
+    id: '/marketplace/equipment',
+    path: '/marketplace/equipment',
+    getParentRoute: () => CountryCodeRoute,
+  } as any)
 const CountryCodeCategoriesHandleRoute =
   CountryCodeCategoriesHandleRouteImport.update({
     id: '/categories/$handle',
@@ -114,6 +142,10 @@ export interface FileRoutesByFullPath {
   '/$countryCode/store': typeof CountryCodeStoreRoute
   '/$countryCode/': typeof CountryCodeIndexRoute
   '/$countryCode/categories/$handle': typeof CountryCodeCategoriesHandleRoute
+  '/$countryCode/marketplace/equipment': typeof CountryCodeMarketplaceEquipmentRoute
+  '/$countryCode/marketplace/harvest': typeof CountryCodeMarketplaceHarvestRoute
+  '/$countryCode/marketplace/storage': typeof CountryCodeMarketplaceStorageRoute
+  '/$countryCode/marketplace/vehicles': typeof CountryCodeMarketplaceVehiclesRoute
   '/$countryCode/products/$handle': typeof CountryCodeProductsHandleRoute
   '/$countryCode/order/$orderId/confirmed': typeof CountryCodeOrderOrderIdConfirmedRoute
 }
@@ -128,6 +160,10 @@ export interface FileRoutesByTo {
   '/$countryCode/store': typeof CountryCodeStoreRoute
   '/$countryCode': typeof CountryCodeIndexRoute
   '/$countryCode/categories/$handle': typeof CountryCodeCategoriesHandleRoute
+  '/$countryCode/marketplace/equipment': typeof CountryCodeMarketplaceEquipmentRoute
+  '/$countryCode/marketplace/harvest': typeof CountryCodeMarketplaceHarvestRoute
+  '/$countryCode/marketplace/storage': typeof CountryCodeMarketplaceStorageRoute
+  '/$countryCode/marketplace/vehicles': typeof CountryCodeMarketplaceVehiclesRoute
   '/$countryCode/products/$handle': typeof CountryCodeProductsHandleRoute
   '/$countryCode/order/$orderId/confirmed': typeof CountryCodeOrderOrderIdConfirmedRoute
 }
@@ -144,6 +180,10 @@ export interface FileRoutesById {
   '/$countryCode/store': typeof CountryCodeStoreRoute
   '/$countryCode/': typeof CountryCodeIndexRoute
   '/$countryCode/categories/$handle': typeof CountryCodeCategoriesHandleRoute
+  '/$countryCode/marketplace/equipment': typeof CountryCodeMarketplaceEquipmentRoute
+  '/$countryCode/marketplace/harvest': typeof CountryCodeMarketplaceHarvestRoute
+  '/$countryCode/marketplace/storage': typeof CountryCodeMarketplaceStorageRoute
+  '/$countryCode/marketplace/vehicles': typeof CountryCodeMarketplaceVehiclesRoute
   '/$countryCode/products/$handle': typeof CountryCodeProductsHandleRoute
   '/$countryCode/order/$orderId/confirmed': typeof CountryCodeOrderOrderIdConfirmedRoute
 }
@@ -161,6 +201,10 @@ export interface FileRouteTypes {
     | '/$countryCode/store'
     | '/$countryCode/'
     | '/$countryCode/categories/$handle'
+    | '/$countryCode/marketplace/equipment'
+    | '/$countryCode/marketplace/harvest'
+    | '/$countryCode/marketplace/storage'
+    | '/$countryCode/marketplace/vehicles'
     | '/$countryCode/products/$handle'
     | '/$countryCode/order/$orderId/confirmed'
   fileRoutesByTo: FileRoutesByTo
@@ -175,6 +219,10 @@ export interface FileRouteTypes {
     | '/$countryCode/store'
     | '/$countryCode'
     | '/$countryCode/categories/$handle'
+    | '/$countryCode/marketplace/equipment'
+    | '/$countryCode/marketplace/harvest'
+    | '/$countryCode/marketplace/storage'
+    | '/$countryCode/marketplace/vehicles'
     | '/$countryCode/products/$handle'
     | '/$countryCode/order/$orderId/confirmed'
   id:
@@ -190,6 +238,10 @@ export interface FileRouteTypes {
     | '/$countryCode/store'
     | '/$countryCode/'
     | '/$countryCode/categories/$handle'
+    | '/$countryCode/marketplace/equipment'
+    | '/$countryCode/marketplace/harvest'
+    | '/$countryCode/marketplace/storage'
+    | '/$countryCode/marketplace/vehicles'
     | '/$countryCode/products/$handle'
     | '/$countryCode/order/$orderId/confirmed'
   fileRoutesById: FileRoutesById
@@ -303,6 +355,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CountryCodeProductsHandleRouteImport
       parentRoute: typeof CountryCodeRoute
     }
+    '/$countryCode/marketplace/vehicles': {
+      id: '/$countryCode/marketplace/vehicles'
+      path: '/marketplace/vehicles'
+      fullPath: '/$countryCode/marketplace/vehicles'
+      preLoaderRoute: typeof CountryCodeMarketplaceVehiclesRouteImport
+      parentRoute: typeof CountryCodeRoute
+    }
+    '/$countryCode/marketplace/storage': {
+      id: '/$countryCode/marketplace/storage'
+      path: '/marketplace/storage'
+      fullPath: '/$countryCode/marketplace/storage'
+      preLoaderRoute: typeof CountryCodeMarketplaceStorageRouteImport
+      parentRoute: typeof CountryCodeRoute
+    }
+    '/$countryCode/marketplace/harvest': {
+      id: '/$countryCode/marketplace/harvest'
+      path: '/marketplace/harvest'
+      fullPath: '/$countryCode/marketplace/harvest'
+      preLoaderRoute: typeof CountryCodeMarketplaceHarvestRouteImport
+      parentRoute: typeof CountryCodeRoute
+    }
+    '/$countryCode/marketplace/equipment': {
+      id: '/$countryCode/marketplace/equipment'
+      path: '/marketplace/equipment'
+      fullPath: '/$countryCode/marketplace/equipment'
+      preLoaderRoute: typeof CountryCodeMarketplaceEquipmentRouteImport
+      parentRoute: typeof CountryCodeRoute
+    }
     '/$countryCode/categories/$handle': {
       id: '/$countryCode/categories/$handle'
       path: '/categories/$handle'
@@ -337,6 +417,10 @@ interface CountryCodeRouteChildren {
   CountryCodeStoreRoute: typeof CountryCodeStoreRoute
   CountryCodeIndexRoute: typeof CountryCodeIndexRoute
   CountryCodeCategoriesHandleRoute: typeof CountryCodeCategoriesHandleRoute
+  CountryCodeMarketplaceEquipmentRoute: typeof CountryCodeMarketplaceEquipmentRoute
+  CountryCodeMarketplaceHarvestRoute: typeof CountryCodeMarketplaceHarvestRoute
+  CountryCodeMarketplaceStorageRoute: typeof CountryCodeMarketplaceStorageRoute
+  CountryCodeMarketplaceVehiclesRoute: typeof CountryCodeMarketplaceVehiclesRoute
   CountryCodeProductsHandleRoute: typeof CountryCodeProductsHandleRoute
   CountryCodeOrderOrderIdConfirmedRoute: typeof CountryCodeOrderOrderIdConfirmedRoute
 }
@@ -347,6 +431,10 @@ const CountryCodeRouteChildren: CountryCodeRouteChildren = {
   CountryCodeStoreRoute: CountryCodeStoreRoute,
   CountryCodeIndexRoute: CountryCodeIndexRoute,
   CountryCodeCategoriesHandleRoute: CountryCodeCategoriesHandleRoute,
+  CountryCodeMarketplaceEquipmentRoute: CountryCodeMarketplaceEquipmentRoute,
+  CountryCodeMarketplaceHarvestRoute: CountryCodeMarketplaceHarvestRoute,
+  CountryCodeMarketplaceStorageRoute: CountryCodeMarketplaceStorageRoute,
+  CountryCodeMarketplaceVehiclesRoute: CountryCodeMarketplaceVehiclesRoute,
   CountryCodeProductsHandleRoute: CountryCodeProductsHandleRoute,
   CountryCodeOrderOrderIdConfirmedRoute: CountryCodeOrderOrderIdConfirmedRoute,
 }
