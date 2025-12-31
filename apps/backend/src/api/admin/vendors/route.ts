@@ -1,14 +1,12 @@
 import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
-import { VENDOR_MODULE } from "../../../modules/vendor"
-import type VendorModuleService from "../../../modules/vendor/service"
 
-export const GET = async (
-  req: MedusaRequest,
-  res: MedusaResponse
-) => {
-  const vendorModuleService: VendorModuleService = req.scope.resolve(VENDOR_MODULE)
+export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
+  const query = req.scope.resolve("query")
   
-  const vendors = await vendorModuleService.listVendors()
+  const { data: vendors } = await query.graph({
+    entity: "vendor",
+    fields: ["id", "name", "email", "status", "created_at"],
+  })
   
   res.json({ vendors })
 }
