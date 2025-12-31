@@ -20,6 +20,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CountryCodeIndexRouteImport } from './routes/$countryCode/index'
 import { Route as CountryCodeStoreRouteImport } from './routes/$countryCode/store'
 import { Route as CountryCodeRegisterRouteImport } from './routes/$countryCode/register'
+import { Route as CountryCodeLoginRouteImport } from './routes/$countryCode/login'
+import { Route as CountryCodeDashboardRouteImport } from './routes/$countryCode/dashboard'
 import { Route as CountryCodeCheckoutRouteImport } from './routes/$countryCode/checkout'
 import { Route as CountryCodeCartRouteImport } from './routes/$countryCode/cart'
 import { Route as CountryCodeProductsHandleRouteImport } from './routes/$countryCode/products/$handle'
@@ -76,6 +78,16 @@ const CountryCodeStoreRoute = CountryCodeStoreRouteImport.update({
 const CountryCodeRegisterRoute = CountryCodeRegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => CountryCodeRoute,
+} as any)
+const CountryCodeLoginRoute = CountryCodeLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => CountryCodeRoute,
+} as any)
+const CountryCodeDashboardRoute = CountryCodeDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => CountryCodeRoute,
 } as any)
 const CountryCodeCheckoutRoute = CountryCodeCheckoutRouteImport.update({
@@ -145,6 +157,8 @@ export interface FileRoutesByFullPath {
   '/store': typeof StoreRoute
   '/$countryCode/cart': typeof CountryCodeCartRoute
   '/$countryCode/checkout': typeof CountryCodeCheckoutRoute
+  '/$countryCode/dashboard': typeof CountryCodeDashboardRoute
+  '/$countryCode/login': typeof CountryCodeLoginRoute
   '/$countryCode/register': typeof CountryCodeRegisterRoute
   '/$countryCode/store': typeof CountryCodeStoreRoute
   '/$countryCode/': typeof CountryCodeIndexRoute
@@ -164,6 +178,8 @@ export interface FileRoutesByTo {
   '/store': typeof StoreRoute
   '/$countryCode/cart': typeof CountryCodeCartRoute
   '/$countryCode/checkout': typeof CountryCodeCheckoutRoute
+  '/$countryCode/dashboard': typeof CountryCodeDashboardRoute
+  '/$countryCode/login': typeof CountryCodeLoginRoute
   '/$countryCode/register': typeof CountryCodeRegisterRoute
   '/$countryCode/store': typeof CountryCodeStoreRoute
   '/$countryCode': typeof CountryCodeIndexRoute
@@ -185,6 +201,8 @@ export interface FileRoutesById {
   '/store': typeof StoreRoute
   '/$countryCode/cart': typeof CountryCodeCartRoute
   '/$countryCode/checkout': typeof CountryCodeCheckoutRoute
+  '/$countryCode/dashboard': typeof CountryCodeDashboardRoute
+  '/$countryCode/login': typeof CountryCodeLoginRoute
   '/$countryCode/register': typeof CountryCodeRegisterRoute
   '/$countryCode/store': typeof CountryCodeStoreRoute
   '/$countryCode/': typeof CountryCodeIndexRoute
@@ -207,6 +225,8 @@ export interface FileRouteTypes {
     | '/store'
     | '/$countryCode/cart'
     | '/$countryCode/checkout'
+    | '/$countryCode/dashboard'
+    | '/$countryCode/login'
     | '/$countryCode/register'
     | '/$countryCode/store'
     | '/$countryCode/'
@@ -226,6 +246,8 @@ export interface FileRouteTypes {
     | '/store'
     | '/$countryCode/cart'
     | '/$countryCode/checkout'
+    | '/$countryCode/dashboard'
+    | '/$countryCode/login'
     | '/$countryCode/register'
     | '/$countryCode/store'
     | '/$countryCode'
@@ -246,6 +268,8 @@ export interface FileRouteTypes {
     | '/store'
     | '/$countryCode/cart'
     | '/$countryCode/checkout'
+    | '/$countryCode/dashboard'
+    | '/$countryCode/login'
     | '/$countryCode/register'
     | '/$countryCode/store'
     | '/$countryCode/'
@@ -353,6 +377,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CountryCodeRegisterRouteImport
       parentRoute: typeof CountryCodeRoute
     }
+    '/$countryCode/login': {
+      id: '/$countryCode/login'
+      path: '/login'
+      fullPath: '/$countryCode/login'
+      preLoaderRoute: typeof CountryCodeLoginRouteImport
+      parentRoute: typeof CountryCodeRoute
+    }
+    '/$countryCode/dashboard': {
+      id: '/$countryCode/dashboard'
+      path: '/dashboard'
+      fullPath: '/$countryCode/dashboard'
+      preLoaderRoute: typeof CountryCodeDashboardRouteImport
+      parentRoute: typeof CountryCodeRoute
+    }
     '/$countryCode/checkout': {
       id: '/$countryCode/checkout'
       path: '/checkout'
@@ -433,6 +471,8 @@ declare module '@tanstack/react-start/server' {
 interface CountryCodeRouteChildren {
   CountryCodeCartRoute: typeof CountryCodeCartRoute
   CountryCodeCheckoutRoute: typeof CountryCodeCheckoutRoute
+  CountryCodeDashboardRoute: typeof CountryCodeDashboardRoute
+  CountryCodeLoginRoute: typeof CountryCodeLoginRoute
   CountryCodeRegisterRoute: typeof CountryCodeRegisterRoute
   CountryCodeStoreRoute: typeof CountryCodeStoreRoute
   CountryCodeIndexRoute: typeof CountryCodeIndexRoute
@@ -448,6 +488,8 @@ interface CountryCodeRouteChildren {
 const CountryCodeRouteChildren: CountryCodeRouteChildren = {
   CountryCodeCartRoute: CountryCodeCartRoute,
   CountryCodeCheckoutRoute: CountryCodeCheckoutRoute,
+  CountryCodeDashboardRoute: CountryCodeDashboardRoute,
+  CountryCodeLoginRoute: CountryCodeLoginRoute,
   CountryCodeRegisterRoute: CountryCodeRegisterRoute,
   CountryCodeStoreRoute: CountryCodeStoreRoute,
   CountryCodeIndexRoute: CountryCodeIndexRoute,

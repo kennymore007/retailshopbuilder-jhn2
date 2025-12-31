@@ -38,6 +38,16 @@ export function getCountryCodeFromPath(pathname: string): string | undefined {
 // ============ DEFAULT COUNTRY CODE ============
 
 export default function getDefaultCountryCode(regions: HttpTypes.StoreRegion[]): string | undefined {
+  // Prioritize Nigeria (ng) as the default country
+  const nigeriaRegion = regions.find((r) => 
+    r.countries?.some((c) => c.iso_2 === "ng")
+  )
+  
+  if (nigeriaRegion) {
+    return "ng"
+  }
+  
+  // Fallback to first available country
   let defaultCountryCode = undefined
   regions.some((r) => {
     defaultCountryCode = r.countries?.[0]?.iso_2
