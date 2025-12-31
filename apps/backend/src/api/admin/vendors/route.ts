@@ -3,10 +3,10 @@ import type {
   MedusaResponse,
 } from "@medusajs/framework/http"
 
-export async function GET(
+export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
-) {
+) => {
   const query = req.scope.resolve("query")
 
   const { data: vendors } = await query.graph({
