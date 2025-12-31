@@ -89,18 +89,16 @@ export const RegisterPage = () => {
         },
       }
 
-      const response = (await sdk.client.fetch("/store/vendors", {
+      const result = await sdk.client.fetch("/store/vendors", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: vendorData,
-      })) as Response
+      }) as any
 
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to register")
+      if (!result || result.error) {
+        throw new Error(result?.error || "Failed to register")
       }
 
       setSuccess(true)
