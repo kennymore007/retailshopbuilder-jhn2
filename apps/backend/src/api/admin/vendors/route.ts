@@ -1,38 +1,14 @@
-import type {
-  AuthenticatedMedusaRequest,
-  MedusaResponse,
-} from "@medusajs/framework/http"
+import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
+import { VENDOR_MODULE } from "../../../modules/vendor"
+import type VendorModuleService from "../../../modules/vendor/service"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: MedusaRequest,
   res: MedusaResponse
 ) => {
-  try {
-    const query = req.scope.resolve("query")
-
-    const { data: vendors } = await query.graph({
-      entity: "vendor",
-      fields: [
-        "id",
-        "business_name",
-        "email",
-        "phone_number",
-        "actor_type",
-        "location",
-        "verification_status",
-        "is_active",
-        "metadata",
-        "created_at",
-        "updated_at",
-      ],
-    })
-
-    res.json({ vendors })
-  } catch (error) {
-    console.error("Error fetching vendors:", error)
-    res.status(500).json({ 
-      message: "Failed to fetch vendors",
-      error: error.message 
-    })
-  }
+  const vendorModuleService: VendorModuleService = req.scope.resolve(VENDOR_MODULE)
+  
+  const vendors = await vendorModuleService.listVendors()
+  
+  res.json({ vendors })
 }
