@@ -24,6 +24,9 @@ const VehicleDetailPage = () => {
     )
   }
 
+  const metadata = listing.metadata as any || {}
+  const vendor = (listing as any).vendor
+
   return (
     <div className="min-h-screen bg-stone-50">
       <div className="content-container py-12">
@@ -42,12 +45,12 @@ const VehicleDetailPage = () => {
           <div className="bg-white p-8 rounded-lg shadow">
             <div className="flex items-center gap-2 mb-4">
               <span className={`px-3 py-1 text-sm font-semibold ${
-                listing.status === "published" ? "bg-green-100 text-green-800" : "bg-stone-100 text-stone-600"
+                listing.status === "active" ? "bg-green-100 text-green-800" : "bg-stone-100 text-stone-600"
               }`}>
-                {listing.status === "published" ? "Available" : "Not Available"}
+                {listing.status === "active" ? "Available" : "Not Available"}
               </span>
               <span className="px-3 py-1 text-sm font-semibold bg-blue-100 text-blue-800">
-                {(listing.metadata as any)?.type || "Vehicle"}
+                {metadata.type || "Vehicle"}
               </span>
             </div>
 
@@ -57,9 +60,7 @@ const VehicleDetailPage = () => {
 
             <div className="mb-6">
               <span className="text-4xl font-bold text-blue-700">
-                ₦{listing.variants?.[0]?.calculated_price?.calculated_amount ? 
-                  (listing.variants[0].calculated_price.calculated_amount / 100).toFixed(2) : 
-                  "N/A"}
+                ₦{(listing as any).price || "N/A"}
               </span>
               <span className="text-stone-600 text-lg">/day</span>
             </div>
@@ -67,16 +68,37 @@ const VehicleDetailPage = () => {
             <div className="space-y-4 mb-6">
               <div className="flex items-center gap-3 text-stone-700">
                 <span className="font-semibold w-24">Capacity:</span>
-                <span>{(listing.metadata as any)?.capacity || "N/A"}</span>
+                <span>{metadata.capacity || "N/A"}</span>
               </div>
               <div className="flex items-center gap-3 text-stone-700">
                 <span className="font-semibold w-24">Location:</span>
-                <span>{(listing.metadata as any)?.location || "N/A"}</span>
+                <span>{(listing as any).location || "N/A"}</span>
               </div>
-              {(listing.metadata as any)?.features && (
+              {metadata.features && (
                 <div className="flex items-start gap-3 text-stone-700">
                   <span className="font-semibold w-24">Features:</span>
-                  <span>{(listing.metadata as any).features}</span>
+                  <span>{metadata.features}</span>
+                </div>
+              )}
+              {vendor && (
+                <div className="mt-6 pt-6 border-t border-stone-200">
+                  <h3 className="font-semibold text-stone-900 mb-3">Vendor Information</h3>
+                  <div className="space-y-2 text-sm text-stone-700">
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold">Business:</span>
+                      <span>{vendor.business_name}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold">Email:</span>
+                      <span>{vendor.email}</span>
+                    </div>
+                    {vendor.phone && (
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold">Phone:</span>
+                        <span>{vendor.phone}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>

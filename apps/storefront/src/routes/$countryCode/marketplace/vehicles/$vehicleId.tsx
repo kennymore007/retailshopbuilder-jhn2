@@ -5,19 +5,13 @@ import { sdk } from '@/lib/utils/sdk'
 export const Route = createFileRoute('/$countryCode/marketplace/vehicles/$vehicleId')({
   loader: async ({ params }) => {
     try {
-      const query = sdk.store.product.list({
-        fields: "*variants.*,*collection",
-        id: [params.vehicleId],
-        limit: 1,
-      })
-
-      const { products } = await query
-
-      if (!products || products.length === 0) {
+      const response: any = await sdk.client.fetch(`/store/listings/${params.vehicleId}`)
+      
+      if (!response || !response.listing) {
         return { listing: null }
       }
 
-      return { listing: products[0] }
+      return { listing: response.listing }
     } catch (error) {
       console.error('Error loading vehicle:', error)
       return { listing: null }
