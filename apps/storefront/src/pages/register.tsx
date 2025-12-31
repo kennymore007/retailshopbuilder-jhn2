@@ -94,7 +94,7 @@ export const RegisterPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(vendorData),
+        body: vendorData,
       })) as Response
 
       const result = await response.json()
@@ -149,7 +149,7 @@ export const RegisterPage = () => {
             Become a Vendor
           </h1>
           <p className="text-lg text-stone-600">
-            Join AgriMarket and connect with buyers, sellers, and service providers across Kenya
+            Join AgriMarket and connect with buyers, sellers, and service providers across Nigeria
           </p>
         </div>
 
@@ -254,7 +254,7 @@ export const RegisterPage = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="Nairobi, Kenya"
+                    placeholder="Lagos, Nigeria"
                   />
                 </div>
               </div>
