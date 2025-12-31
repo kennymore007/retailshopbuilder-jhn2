@@ -92,7 +92,7 @@ const HarvestMarketplace = () => {
     grade: listing.metadata?.grade || 'N/A',
     quantity: listing.quantity || 0,
     unit: listing.unit || 'kg',
-    pricePerUnit: listing.price_amount / (listing.quantity || 1),
+    pricePerUnit: (listing.price_amount / 100) / (listing.quantity || 1),
     currency: listing.price_currency?.toUpperCase() || 'KES',
     harvestDate: listing.metadata?.harvest_date || new Date().toISOString(),
     farmerName: listing.metadata?.farmer_name || 'Unknown Farmer',

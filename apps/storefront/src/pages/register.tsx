@@ -76,12 +76,25 @@ export const RegisterPage = () => {
     setError(null)
 
     try {
+      // Map form data to match workflow input
+      const vendorData = {
+        email: formData.email,
+        business_name: formData.business_name,
+        actor_type: formData.actor_type,
+        phone_number: formData.phone,
+        location: formData.location,
+        metadata: {
+          description: formData.description,
+          contact_name: formData.name,
+        },
+      }
+
       const response = (await sdk.client.fetch("/store/vendors", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(vendorData),
       })) as Response
 
       const result = await response.json()
