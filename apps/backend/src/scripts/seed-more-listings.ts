@@ -3,65 +3,65 @@ import { createVendorWorkflow } from "../workflows/vendor/create-vendor";
 import { createListingWorkflow } from "../workflows/vendor/create-listing";
 
 export default async function({ container }: ExecArgs) {
-  console.log("🌾 Seeding more marketplace listings...");
+  console.log("🌾 Seeding more Nigerian marketplace listings...");
 
-  // Create more farmers
+  // Create more farmers with Nigerian names and locations
   const farmers = [
     {
-      business_name: "Nyeri Fresh Produce",
+      business_name: "Onitsha Fresh Produce",
       actor_type: "farmer",
-      location: "Nyeri",
-      phone_number: "+254722334455",
-      email: "info@nyerifresh.ke"
+      location: "Lagos",
+      phone_number: "+2348022334455",
+      email: "info@onitshafresh.ng"
     },
     {
-      business_name: "Eldoret Grain Traders",
+      business_name: "Kano Grain Traders",
       actor_type: "farmer",
-      location: "Eldoret",
-      phone_number: "+254733445566",
-      email: "sales@eldoretgrain.ke"
+      location: "Abuja",
+      phone_number: "+2348033445566",
+      email: "sales@kanograin.ng"
     },
     {
-      business_name: "Murang'a Coffee Cooperative",
+      business_name: "Enugu Cassava Cooperative",
       actor_type: "farmer",
-      location: "Murang'a",
-      phone_number: "+254744556677",
-      email: "coop@murangacoffee.ke"
+      location: "Port Harcourt",
+      phone_number: "+2348044556677",
+      email: "coop@enumgucassava.ng"
     },
     {
-      business_name: "Machakos Horticultural",
+      business_name: "Oyo Horticultural Hub",
       actor_type: "farmer",
-      location: "Machakos",
-      phone_number: "+254755667788",
-      email: "contact@machakoshort.ke"
+      location: "Ibadan",
+      phone_number: "+2348055667788",
+      email: "contact@oyohort.ng"
     },
     {
-      business_name: "Kisii Tea Estates",
+      business_name: "Delta Palm Oil Estates",
       actor_type: "farmer",
-      location: "Kisii",
-      phone_number: "+254766778899",
-      email: "info@kisiitea.ke"
+      location: "Lagos",
+      phone_number: "+2348066778899",
+      email: "info@deltapalm.ng"
     },
     {
-      business_name: "Kericho Valley Farms",
+      business_name: "Plateau Vegetable Farms",
       actor_type: "farmer",
-      location: "Kericho",
-      phone_number: "+254777889900",
-      email: "farms@kerichovalley.ke"
+      location: "Abuja",
+      phone_number: "+2348077889900",
+      email: "farms@plateauveg.ng"
     },
     {
-      business_name: "Bungoma Maize Growers",
+      business_name: "Benue Yam Growers",
       actor_type: "farmer",
-      location: "Bungoma",
-      phone_number: "+254788990011",
-      email: "maize@bungoma.ke"
+      location: "Ibadan",
+      phone_number: "+2348088990011",
+      email: "yam@benue.ng"
     },
     {
-      business_name: "Nakuru Dairy & Greens",
+      business_name: "Kaduna Rice Mills",
       actor_type: "farmer",
-      location: "Nakuru",
-      phone_number: "+254799001122",
-      email: "dairy@nakurugreens.ke"
+      location: "Lagos",
+      phone_number: "+2348099001122",
+      email: "rice@kadunarice.ng"
     }
   ];
 
@@ -80,392 +80,478 @@ export default async function({ container }: ExecArgs) {
     }
   }
 
-  // Create diverse harvest listings
+  // Create diverse harvest listings with Nigerian crops
   const harvestListings = [
     {
-      title: "Fresh Kale - Premium Grade",
-      description: "Crisp, fresh kale harvested this morning. Perfect for salads and cooking. Rich in vitamins and grown with organic methods.",
+      title: "Fresh Ugu (Pumpkin Leaves) - Premium Grade",
+      description: "Crisp, fresh ugu harvested this morning. Perfect for soups and cooking. Rich in vitamins and grown with organic methods.",
       listing_type: "harvest",
-      price_amount: 8,
+      price_amount: 800,
       price_currency: "ngn",
       unit: "kg",
       quantity: 200,
-      location: "Nyeri",
+      location: "Lagos",
       metadata: {
-        crop_type: "Kale",
+        crop_type: "Ugu",
         grade: "A",
         harvest_date: "2025-01-13",
         storage_conditions: "Refrigerated",
-        certifications: ["Organic Certified", "GlobalGAP"]
-      }
-    },
-    {
-      title: "White Maize Grain - Grade B",
-      description: "Quality white maize suitable for milling into flour. Properly dried and stored. Great for posho and ugali production.",
-      listing_type: "harvest",
-      price_amount: 4.2,
-      price_currency: "ngn",
-      unit: "kg",
-      quantity: 3000,
-      location: "Eldoret",
-      metadata: {
-        crop_type: "Maize",
-        grade: "B",
-        harvest_date: "2024-12-20",
-        storage_conditions: "Dry warehouse",
-        certifications: ["KEBS Certified"]
-      }
-    },
-    {
-      title: "Arabica Coffee Beans - AA Grade",
-      description: "Premium Arabica coffee beans from high altitude farms. Excellent flavor profile with fruity notes. Washed and sun-dried.",
-      listing_type: "harvest",
-      price_amount: 85,
-      price_currency: "ngn",
-      unit: "kg",
-      quantity: 150,
-      location: "Murang'a",
-      metadata: {
-        crop_type: "Coffee",
-        grade: "AA",
-        harvest_date: "2025-01-05",
-        storage_conditions: "Cool, dry storage",
-        certifications: ["Fair Trade", "Rainforest Alliance"]
-      }
-    },
-    {
-      title: "Green Bell Peppers",
-      description: "Fresh, crunchy green bell peppers. Excellent for cooking, salads, and export. No pesticide residue.",
-      listing_type: "harvest",
-      price_amount: 12,
-      price_currency: "ngn",
-      unit: "kg",
-      quantity: 400,
-      location: "Machakos",
-      metadata: {
-        crop_type: "Bell Peppers",
-        grade: "A",
-        harvest_date: "2025-01-14",
-        storage_conditions: "Cool storage",
-        certifications: ["GlobalGAP", "HACCP"]
-      }
-    },
-    {
-      title: "Purple Tea Leaves - Premium",
-      description: "Rare purple tea leaves rich in antioxidants. Hand-picked and processed. Perfect for specialty tea blends.",
-      listing_type: "harvest",
-      price_amount: 65,
-      price_currency: "ngn",
-      unit: "kg",
-      quantity: 80,
-      location: "Kisii",
-      metadata: {
-        crop_type: "Tea",
-        grade: "Premium",
-        harvest_date: "2025-01-12",
-        storage_conditions: "Airtight containers",
         certifications: ["Organic Certified"]
       }
     },
     {
-      title: "Red Onions - Bulk Sale",
-      description: "Large quantity of quality red onions. Perfect for wholesalers and processors. Well-cured and ready for market.",
+      title: "White Yam Tubers - Grade A",
+      description: "Large, quality white yam tubers from Benue farms. Ideal for pounding, frying, or boiling.",
       listing_type: "harvest",
-      price_amount: 6.5,
-      price_currency: "ngn",
-      unit: "kg",
-      quantity: 2000,
-      location: "Kericho",
-      metadata: {
-        crop_type: "Onions",
-        grade: "A",
-        harvest_date: "2024-12-28",
-        storage_conditions: "Ventilated shed",
-        certifications: ["KEBS Approved"]
-      }
-    },
-    {
-      title: "Sweet Potatoes - Orange Flesh",
-      description: "Nutritious orange-fleshed sweet potatoes. High in Vitamin A. Great for schools and institutional buyers.",
-      listing_type: "harvest",
-      price_amount: 5,
+      price_amount: 1200,
       price_currency: "ngn",
       unit: "kg",
       quantity: 1500,
-      location: "Bungoma",
+      location: "Ibadan",
       metadata: {
-        crop_type: "Sweet Potatoes",
-        grade: "A",
-        harvest_date: "2025-01-08",
-        storage_conditions: "Ambient storage",
-        certifications: ["Quality Assured"]
-      }
-    },
-    {
-      title: "Fresh Spinach - Baby Leaves",
-      description: "Tender baby spinach leaves. Perfect for salads and quick cooking. Hydroponic grown with no soil contamination.",
-      listing_type: "harvest",
-      price_amount: 15,
-      price_currency: "ngn",
-      unit: "kg",
-      quantity: 100,
-      location: "Nakuru",
-      metadata: {
-        crop_type: "Spinach",
-        grade: "Premium",
-        harvest_date: "2025-01-15",
-        storage_conditions: "Refrigerated",
-        certifications: ["Hydroponic Certified"]
-      }
-    },
-    {
-      title: "Passion Fruit - Export Quality",
-      description: "Grade A passion fruits ready for export or local processing. Uniform size, perfect ripeness. Sweet and aromatic.",
-      listing_type: "harvest",
-      price_amount: 18,
-      price_currency: "ngn",
-      unit: "kg",
-      quantity: 600,
-      location: "Nyeri",
-      metadata: {
-        crop_type: "Passion Fruit",
-        grade: "A",
-        harvest_date: "2025-01-13",
-        storage_conditions: "Cool, ventilated",
-        certifications: ["GlobalGAP", "HACCP"]
-      }
-    },
-    {
-      title: "Irish Potatoes - Washed",
-      description: "Clean, washed Irish potatoes. Ideal for hotels, restaurants, and supermarkets. Multiple varieties available.",
-      listing_type: "harvest",
-      price_amount: 7,
-      price_currency: "ngn",
-      unit: "kg",
-      quantity: 3500,
-      location: "Eldoret",
-      metadata: {
-        crop_type: "Potatoes",
+        crop_type: "Yam",
         grade: "A",
         harvest_date: "2025-01-10",
-        storage_conditions: "Cool, dark storage",
-        certifications: ["KEBS Certified"]
+        tuber_size: "Large",
+        certifications: ["Quality Tested"]
       }
     },
     {
-      title: "Carrots - Baby & Regular",
-      description: "Fresh carrots in various sizes. Crunchy and sweet. Perfect for salads, juicing, and cooking.",
+      title: "Palm Oil - Crude Red Grade",
+      description: "Fresh palm oil extracted from premium quality palm fruits. Rich color and authentic flavor.",
       listing_type: "harvest",
-      price_amount: 9,
+      price_amount: 2500,
+      price_currency: "ngn",
+      unit: "litre",
+      quantity: 500,
+      location: "Lagos",
+      metadata: {
+        crop_type: "Palm Oil",
+        grade: "A",
+        extraction_date: "2025-01-12",
+        purity: "100%",
+        certifications: ["NAFDAC Approved"]
+      }
+    },
+    {
+      title: "Fresh Pepper (Ata Rodo) - Hot",
+      description: "Spicy red pepper perfect for Nigerian stews and soups. Freshly harvested and carefully sorted.",
+      listing_type: "harvest",
+      price_amount: 3000,
+      price_currency: "ngn",
+      unit: "kg",
+      quantity: 150,
+      location: "Abuja",
+      metadata: {
+        crop_type: "Pepper",
+        variety: "Ata Rodo",
+        grade: "A",
+        harvest_date: "2025-01-14",
+        heat_level: "Hot"
+      }
+    },
+    {
+      title: "Cassava Tubers - Fresh Grade A",
+      description: "Quality cassava tubers suitable for garri, fufu, and other cassava products. Freshly harvested.",
+      listing_type: "harvest",
+      price_amount: 600,
+      price_currency: "ngn",
+      unit: "kg",
+      quantity: 2000,
+      location: "Port Harcourt",
+      metadata: {
+        crop_type: "Cassava",
+        grade: "A",
+        harvest_date: "2025-01-11",
+        variety: "TME 419",
+        moisture_content: "Low"
+      }
+    },
+    {
+      title: "Plantain (Unripe) - Export Quality",
+      description: "Unripe plantain perfect for chips, dodo, and cooking. Carefully selected for size and quality.",
+      listing_type: "harvest",
+      price_amount: 1800,
       price_currency: "ngn",
       unit: "kg",
       quantity: 800,
-      location: "Machakos",
+      location: "Lagos",
       metadata: {
-        crop_type: "Carrots",
+        crop_type: "Plantain",
+        ripeness: "Unripe",
         grade: "A",
-        harvest_date: "2025-01-11",
-        storage_conditions: "Refrigerated",
-        certifications: ["Quality Assured"]
+        harvest_date: "2025-01-13",
+        bunch_size: "Large"
       }
     },
     {
-      title: "Black Tea - CTC Grade",
-      description: "CTC processed black tea for strong brew. Perfect for local market and blending. Consistent quality.",
+      title: "Nigerian Rice (Ofada) - Premium",
+      description: "Locally grown Ofada rice with authentic aroma and taste. Stone-free and well processed.",
       listing_type: "harvest",
-      price_amount: 45,
+      price_amount: 4500,
       price_currency: "ngn",
       unit: "kg",
-      quantity: 500,
-      location: "Kericho",
+      quantity: 1000,
+      location: "Lagos",
       metadata: {
-        crop_type: "Tea",
-        grade: "CTC",
-        harvest_date: "2025-01-09",
-        storage_conditions: "Airtight packaging",
-        certifications: ["KTDA Certified"]
+        crop_type: "Rice",
+        variety: "Ofada",
+        grade: "Premium",
+        harvest_date: "2024-12-20",
+        processing: "Stone-free"
+      }
+    },
+    {
+      title: "Fresh Waterleaf - Grade A",
+      description: "Fresh waterleaf for soups and cooking. Harvested same day and carefully washed.",
+      listing_type: "harvest",
+      price_amount: 700,
+      price_currency: "ngn",
+      unit: "kg",
+      quantity: 180,
+      location: "Abuja",
+      metadata: {
+        crop_type: "Waterleaf",
+        grade: "A",
+        harvest_date: "2025-01-14",
+        storage_conditions: "Refrigerated"
+      }
+    },
+    {
+      title: "Groundnut (Peanuts) - Roasted Quality",
+      description: "Premium groundnuts suitable for oil extraction or direct consumption. Well dried and sorted.",
+      listing_type: "harvest",
+      price_amount: 2800,
+      price_currency: "ngn",
+      unit: "kg",
+      quantity: 600,
+      location: "Abuja",
+      metadata: {
+        crop_type: "Groundnut",
+        grade: "A",
+        harvest_date: "2024-12-28",
+        moisture_content: "10%",
+        certifications: ["Quality Tested"]
+      }
+    },
+    {
+      title: "Fresh Ewedu (Jute Leaves)",
+      description: "Traditional ewedu leaves for soups. Freshly harvested and sorted for quality.",
+      listing_type: "harvest",
+      price_amount: 600,
+      price_currency: "ngn",
+      unit: "kg",
+      quantity: 120,
+      location: "Ibadan",
+      metadata: {
+        crop_type: "Ewedu",
+        grade: "A",
+        harvest_date: "2025-01-14",
+        leaf_quality: "Tender"
+      }
+    },
+    {
+      title: "Garden Eggs (White) - Fresh",
+      description: "Fresh white garden eggs for cooking and stews. Carefully sorted and packaged.",
+      listing_type: "harvest",
+      price_amount: 1500,
+      price_currency: "ngn",
+      unit: "kg",
+      quantity: 250,
+      location: "Lagos",
+      metadata: {
+        crop_type: "Garden Egg",
+        variety: "White",
+        grade: "A",
+        harvest_date: "2025-01-13"
+      }
+    },
+    {
+      title: "Sweet Potatoes - Yellow Variety",
+      description: "Sweet yellow potatoes rich in nutrients. Perfect for boiling, frying, or baking.",
+      listing_type: "harvest",
+      price_amount: 900,
+      price_currency: "ngn",
+      unit: "kg",
+      quantity: 700,
+      location: "Ibadan",
+      metadata: {
+        crop_type: "Sweet Potato",
+        variety: "Yellow",
+        grade: "A",
+        harvest_date: "2025-01-12"
       }
     }
   ];
 
-  // Add more equipment and vehicle listings
+  // Create harvest listings
+  let harvestCount = 0;
+  for (let i = 0; i < harvestListings.length && i < vendorIds.length; i++) {
+    try {
+      await createListingWorkflow(container).run({
+        input: {
+          vendor_id: vendorIds[i % vendorIds.length],
+          status: "active",
+          ...harvestListings[i]
+        }
+      });
+      harvestCount++;
+      console.log(`✅ Created harvest listing: ${harvestListings[i].title}`);
+    } catch (error) {
+      console.log(`⚠️  Error creating listing:`, error.message);
+    }
+  }
+
+  // Create equipment listings
+  const equipmentOwners = [
+    {
+      business_name: "Lagos Equipment Rentals",
+      actor_type: "equipment_owner",
+      location: "Lagos",
+      phone_number: "+2348011223344",
+      email: "rentals@lagosequip.ng"
+    },
+    {
+      business_name: "Abuja Farm Machinery",
+      actor_type: "equipment_owner",
+      location: "Abuja",
+      phone_number: "+2348022334455",
+      email: "machinery@abujafarm.ng"
+    }
+  ];
+
+  const equipmentVendorIds: string[] = [];
+  for (const owner of equipmentOwners) {
+    try {
+      const { result } = await createVendorWorkflow(container).run({
+        input: owner
+      });
+      equipmentVendorIds.push(result.id);
+      console.log(`✅ Created equipment owner: ${owner.business_name}`);
+    } catch (error) {
+      console.log(`⚠️  Skipping ${owner.business_name}`);
+    }
+  }
+
   const equipmentListings = [
     {
-      title: "Harrow - 20 Disc",
-      description: "Heavy-duty disc harrow for land preparation. Suitable for large farms. Well-maintained equipment.",
+      title: "Harrow (20 Disc) - Heavy Duty",
+      description: "Professional 20-disc harrow for land preparation. Well maintained and ready for use.",
       listing_type: "equipment",
-      price_amount: 800,
+      price_amount: 25000,
       price_currency: "ngn",
-      unit: "day",
-      quantity: 1,
-      location: "Nakuru",
+      location: "Lagos",
       metadata: {
         equipment_type: "Harrow",
-        condition: "Good",
-        daily_rate: true
+        disc_count: 20,
+        daily_rate: 25000,
+        weekly_rate: 150000,
+        available: true
       }
     },
     {
-      title: "Planter - 4-Row Maize",
-      description: "Precision maize planter with fertilizer attachment. Increases planting efficiency. Operator available.",
+      title: "Maize Planter (4-Row)",
+      description: "Efficient 4-row maize planter for large scale farming. Speeds up planting operations.",
       listing_type: "equipment",
-      price_amount: 1200,
+      price_amount: 30000,
       price_currency: "ngn",
-      unit: "day",
-      quantity: 1,
-      location: "Eldoret",
+      location: "Abuja",
       metadata: {
         equipment_type: "Planter",
-        condition: "Excellent",
-        daily_rate: true
+        rows: 4,
+        daily_rate: 30000,
+        weekly_rate: 180000,
+        available: true
       }
     },
     {
-      title: "Water Pump - 4 inch Diesel",
-      description: "Powerful diesel water pump for irrigation. Can pump up to 100m distance. Fuel-efficient.",
+      title: "Water Pump - Diesel 3HP",
+      description: "Reliable diesel water pump for irrigation. Low fuel consumption and high efficiency.",
       listing_type: "equipment",
-      price_amount: 600,
+      price_amount: 15000,
       price_currency: "ngn",
-      unit: "day",
-      quantity: 2,
-      location: "Machakos",
+      location: "Lagos",
       metadata: {
-        equipment_type: "Pump",
-        condition: "Good",
-        daily_rate: true
+        equipment_type: "Water Pump",
+        power: "3HP",
+        fuel_type: "Diesel",
+        daily_rate: 15000,
+        weekly_rate: 90000,
+        available: true
       }
     }
   ];
+
+  let equipmentCount = 0;
+  for (let i = 0; i < equipmentListings.length && equipmentVendorIds.length > 0; i++) {
+    try {
+      await createListingWorkflow(container).run({
+        input: {
+          vendor_id: equipmentVendorIds[i % equipmentVendorIds.length],
+          status: "active",
+          ...equipmentListings[i]
+        }
+      });
+      equipmentCount++;
+      console.log(`✅ Created equipment listing: ${equipmentListings[i].title}`);
+    } catch (error) {
+      console.log(`⚠️  Error creating equipment listing`);
+    }
+  }
+
+  // Create vehicle listings
+  const vehicleOwners = [
+    {
+      business_name: "Lagos Metro Logistics",
+      actor_type: "gig_worker",
+      location: "Lagos",
+      phone_number: "+2348033445566",
+      email: "metro@lagoslogistics.ng"
+    },
+    {
+      business_name: "Port Harcourt Haulage",
+      actor_type: "gig_worker",
+      location: "Port Harcourt",
+      phone_number: "+2348044556677",
+      email: "haulage@phhaulage.ng"
+    }
+  ];
+
+  const vehicleVendorIds: string[] = [];
+  for (const owner of vehicleOwners) {
+    try {
+      const { result } = await createVendorWorkflow(container).run({
+        input: owner
+      });
+      vehicleVendorIds.push(result.id);
+      console.log(`✅ Created vehicle owner: ${owner.business_name}`);
+    } catch (error) {
+      console.log(`⚠️  Skipping ${owner.business_name}`);
+    }
+  }
 
   const vehicleListings = [
     {
-      title: "Isuzu NQR - 7 Ton Capacity",
-      description: "Clean Isuzu truck for agricultural produce transport. Tarpaulin cover included. Experienced driver available.",
+      title: "Isuzu NQR - 7 Ton Truck",
+      description: "Reliable Isuzu truck for medium to heavy loads. Well maintained with excellent fuel economy.",
       listing_type: "vehicle",
-      price_amount: 2500,
+      price_amount: 45000,
       price_currency: "ngn",
-      unit: "day",
-      quantity: 1,
-      location: "Nairobi",
+      location: "Lagos",
       metadata: {
         vehicle_type: "Truck",
-        capacity: "7 tons",
-        condition: "Excellent"
+        capacity_kg: 7000,
+        make: "Isuzu",
+        model: "NQR",
+        daily_rate: 45000,
+        hourly_rate: 6000,
+        available: true
       }
     },
     {
       title: "Mitsubishi Canter - Refrigerated",
-      description: "Refrigerated truck for perishable goods. Temperature controlled. Ideal for vegetables and dairy.",
+      description: "Refrigerated truck for cold chain transportation. Ideal for perishable farm produce.",
       listing_type: "vehicle",
-      price_amount: 3500,
+      price_amount: 60000,
       price_currency: "ngn",
-      unit: "day",
-      quantity: 1,
-      location: "Nakuru",
+      location: "Port Harcourt",
       metadata: {
         vehicle_type: "Refrigerated Truck",
-        capacity: "5 tons",
-        condition: "Excellent"
+        capacity_kg: 3000,
+        make: "Mitsubishi",
+        model: "Canter",
+        temperature_range: "-5 to 8°C",
+        daily_rate: 60000,
+        hourly_rate: 8000,
+        available: true
       }
     }
   ];
+
+  let vehicleCount = 0;
+  for (let i = 0; i < vehicleListings.length && vehicleVendorIds.length > 0; i++) {
+    try {
+      await createListingWorkflow(container).run({
+        input: {
+          vendor_id: vehicleVendorIds[i % vehicleVendorIds.length],
+          status: "active",
+          ...vehicleListings[i]
+        }
+      });
+      vehicleCount++;
+      console.log(`✅ Created vehicle listing: ${vehicleListings[i].title}`);
+    } catch (error) {
+      console.log(`⚠️  Error creating vehicle listing`);
+    }
+  }
+
+  // Create storage listing
+  const storageOwners = [
+    {
+      business_name: "Ibadan Storage Solutions",
+      actor_type: "storage_operator",
+      location: "Ibadan",
+      phone_number: "+2348055667788",
+      email: "storage@ibadanstorage.ng"
+    }
+  ];
+
+  const storageVendorIds: string[] = [];
+  for (const owner of storageOwners) {
+    try {
+      const { result } = await createVendorWorkflow(container).run({
+        input: owner
+      });
+      storageVendorIds.push(result.id);
+      console.log(`✅ Created storage operator: ${owner.business_name}`);
+    } catch (error) {
+      console.log(`⚠️  Skipping ${owner.business_name}`);
+    }
+  }
 
   const storageListings = [
     {
       title: "Grain Silo - 100 Ton Capacity",
-      description: "Modern grain storage silo with fumigation system. Perfect for maize, wheat, and beans. Pest-free guarantee.",
+      description: "Modern grain storage silo with ventilation system. Perfect for storing rice, maize, and other grains.",
       listing_type: "storage",
-      price_amount: 50,
+      price_amount: 25000,
       price_currency: "ngn",
-      unit: "ton/month",
-      quantity: 100,
-      location: "Eldoret",
+      location: "Ibadan",
       metadata: {
         storage_type: "Silo",
-        capacity: "100 tons",
-        features: "Fumigation, Aeration"
+        capacity_kg: 100000,
+        grain_types: ["Rice", "Maize", "Wheat"],
+        daily_rate: 25000,
+        monthly_rate: 600000,
+        available_capacity: 75000,
+        features: ["Ventilation System", "Pest Control", "Security"]
       }
     }
   ];
 
-  // Create listings
-  let harvestCount = 0;
-  for (let i = 0; i < harvestListings.length; i++) {
-    const listing = harvestListings[i];
-    const vendorId = vendorIds[i % vendorIds.length]; // Distribute across vendors
-    
-    try {
-      await createListingWorkflow(container).run({
-        input: {
-          ...listing,
-          vendor_id: vendorId
-        }
-      });
-      harvestCount++;
-      console.log(`✅ Created harvest listing: ${listing.title}`);
-    } catch (error) {
-      console.log(`⚠️  Skipping ${listing.title}:`, error.message);
-    }
-  }
-
-  let equipmentCount = 0;
-  for (const listing of equipmentListings) {
-    const vendorId = vendorIds[Math.floor(Math.random() * vendorIds.length)];
-    
-    try {
-      await createListingWorkflow(container).run({
-        input: {
-          ...listing,
-          vendor_id: vendorId
-        }
-      });
-      equipmentCount++;
-      console.log(`✅ Created equipment listing: ${listing.title}`);
-    } catch (error) {
-      console.log(`⚠️  Skipping ${listing.title}:`, error.message);
-    }
-  }
-
-  let vehicleCount = 0;
-  for (const listing of vehicleListings) {
-    const vendorId = vendorIds[Math.floor(Math.random() * vendorIds.length)];
-    
-    try {
-      await createListingWorkflow(container).run({
-        input: {
-          ...listing,
-          vendor_id: vendorId
-        }
-      });
-      vehicleCount++;
-      console.log(`✅ Created vehicle listing: ${listing.title}`);
-    } catch (error) {
-      console.log(`⚠️  Skipping ${listing.title}:`, error.message);
-    }
-  }
-
   let storageCount = 0;
-  for (const listing of storageListings) {
-    const vendorId = vendorIds[Math.floor(Math.random() * vendorIds.length)];
-    
+  for (let i = 0; i < storageListings.length && storageVendorIds.length > 0; i++) {
     try {
       await createListingWorkflow(container).run({
         input: {
-          ...listing,
-          vendor_id: vendorId
+          vendor_id: storageVendorIds[i % storageVendorIds.length],
+          status: "active",
+          ...storageListings[i]
         }
       });
       storageCount++;
-      console.log(`✅ Created storage listing: ${listing.title}`);
+      console.log(`✅ Created storage listing: ${storageListings[i].title}`);
     } catch (error) {
-      console.log(`⚠️  Skipping ${listing.title}:`, error.message);
+      console.log(`⚠️  Error creating storage listing`);
     }
   }
 
-  console.log("\n📊 Summary:");
-  console.log(`   Harvest listings: ${harvestCount}`);
-  console.log(`   Equipment listings: ${equipmentCount}`);
-  console.log(`   Vehicle listings: ${vehicleCount}`);
-  console.log(`   Storage listings: ${storageCount}`);
-  console.log("\n✨ Seeding complete!");
+  console.log("\n✅ Nigerian marketplace seeding completed!");
+  console.log(`📊 Summary:`);
+  console.log(`   - ${vendorIds.length} farmers created`);
+  console.log(`   - ${harvestCount} harvest listings created`);
+  console.log(`   - ${equipmentCount} equipment listings created`);
+  console.log(`   - ${vehicleCount} vehicle listings created`);
+  console.log(`   - ${storageCount} storage listings created`);
+  console.log(`   - Total listings: ${harvestCount + equipmentCount + vehicleCount + storageCount}`);
 }
