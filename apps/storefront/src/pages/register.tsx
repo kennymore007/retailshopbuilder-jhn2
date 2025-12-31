@@ -64,6 +64,8 @@ export const RegisterPage = () => {
     business_name: "",
     location: "",
     description: "",
+    password: "",
+    confirmPassword: "",
   })
 
   const [loading, setLoading] = useState(false)
@@ -75,10 +77,18 @@ export const RegisterPage = () => {
     setLoading(true)
     setError(null)
 
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match")
+      setLoading(false)
+      return
+    }
+
     try {
       // Map form data to match workflow input
       const vendorData = {
         email: formData.email,
+        password: formData.password,
         business_name: formData.business_name,
         actor_type: formData.actor_type,
         phone_number: formData.phone,
@@ -103,9 +113,9 @@ export const RegisterPage = () => {
 
       setSuccess(true)
       
-      // Redirect to marketplace after 2 seconds
+      // Redirect to vendor login page after 2 seconds
       setTimeout(() => {
-        navigate({ to: `${baseHref}/marketplace/harvest` })
+        navigate({ to: `${baseHref}/vendor-login` })
       }, 2000)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong")
@@ -131,8 +141,11 @@ export const RegisterPage = () => {
           <h2 className="text-2xl font-bold text-green-900 mb-2">
             Registration Successful!
           </h2>
-          <p className="text-stone-600">
-            Welcome to AgriMarket. Redirecting you to the marketplace...
+          <p className="text-stone-600 mb-4">
+            Your vendor account has been created. Redirecting you to login...
+          </p>
+          <p className="text-sm text-stone-500">
+            You can now log in with your email and password to access your vendor dashboard.
           </p>
         </div>
       </div>
@@ -253,6 +266,38 @@ export const RegisterPage = () => {
                     required
                     className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="Lagos, Nigeria"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-2">
+                    Password *
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    value={formData.password || ''}
+                    onChange={handleChange}
+                    required
+                    minLength={8}
+                    className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    placeholder="Minimum 8 characters"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-2">
+                    Confirm Password *
+                  </label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword || ''}
+                    onChange={handleChange}
+                    required
+                    minLength={8}
+                    className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    placeholder="Re-enter password"
                   />
                 </div>
               </div>

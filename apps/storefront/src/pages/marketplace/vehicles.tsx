@@ -116,12 +116,13 @@ const VehiclesMarketplace = () => {
                   )}
                 </div>
 
-                <a
-                  href={`/${countryCode}/marketplace/vehicles/${vehicle.id}`}
+                <Link
+                  to="/$countryCode/marketplace/vehicles/$vehicleId"
+                  params={{ countryCode: countryCode || 'ng', vehicleId: vehicle.id }}
                   className="block bg-blue-700 text-white text-center py-3 font-semibold hover:bg-blue-800 transition-colors"
                 >
                   View & Book
-                </a>
+                </Link>
               </div>
             </div>
           ))}

@@ -81,6 +81,14 @@ export const Navbar = () => {
                   </a>
                 </NavigationMenu.Link>
               </NavigationMenu.Item>
+              
+              <NavigationMenu.Item>
+                <NavigationMenu.Link asChild>
+                  <a href={`${baseHref}/vendor-login`} className="text-green-100 hover:text-white">
+                    Vendor Login
+                  </a>
+                </NavigationMenu.Link>
+              </NavigationMenu.Item>
             </NavigationMenu.List>
 
             <NavigationMenu.Viewport
