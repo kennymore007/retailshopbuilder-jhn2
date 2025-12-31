@@ -3,10 +3,17 @@ import { createVendorWorkflow } from "../../../workflows/vendor/create-vendor"
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const query = req.scope.resolve("query")
+  const { email } = req.query
+  
+  const filters: any = {}
+  if (email) {
+    filters.email = email
+  }
   
   const { data: vendors } = await query.graph({
     entity: "vendor",
     fields: ["*"],
+    filters,
   })
 
   res.json({ vendors })

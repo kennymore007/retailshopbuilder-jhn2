@@ -31,10 +31,13 @@ export const VendorLoginPage = () => {
 
     try {
       // Login using Medusa auth
-      await sdk.auth.login("vendor", "emailpass", {
+      const result = await sdk.auth.login("vendor", "emailpass", {
         email: formData.email,
         password: formData.password,
       })
+
+      // Store vendor email in localStorage for dashboard
+      localStorage.setItem("vendor_email", formData.email)
 
       // Redirect to vendor dashboard
       navigate({ to: `${baseHref}/vendor-dashboard` })

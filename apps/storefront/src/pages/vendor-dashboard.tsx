@@ -7,8 +7,12 @@ export const VendorDashboardPage = () => {
   const { vendor, listings = [] } = Route.useLoaderData() as { vendor: any, listings: any[] }
 
   const handleLogout = async () => {
+    // Clear localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('vendor_email')
+    }
     await sdk.auth.logout()
-    navigate({ to: '/$countryCode', params: { countryCode: 'ng' } })
+    navigate({ to: '/$countryCode/vendor-login', params: { countryCode: 'ng' } })
   }
 
   if (!vendor) {
