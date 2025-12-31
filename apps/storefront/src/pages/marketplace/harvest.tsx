@@ -191,9 +191,10 @@ const HarvestMarketplace = () => {
               className="px-4 py-2 border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="all">All Locations</option>
-              <option value="Kiambu County">Kiambu County</option>
-              <option value="Nakuru County">Nakuru County</option>
-              <option value="Kisumu County">Kisumu County</option>
+              <option value="Lagos">Lagos</option>
+              <option value="Abuja">Abuja</option>
+              <option value="Ibadan">Ibadan</option>
+              <option value="Port Harcourt">Port Harcourt</option>
             </select>
 
             <select 
@@ -252,7 +253,7 @@ const HarvestMarketplace = () => {
                 {/* Price */}
                 <div className="mb-4">
                   <span className="text-2xl font-bold text-green-700">
-                    ${listing.pricePerUnit.toFixed(2)}
+                    ₦{listing.pricePerUnit.toFixed(2)}
                   </span>
                   <span className="text-stone-600 text-sm">/{listing.unit}</span>
                 </div>

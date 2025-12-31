@@ -94,7 +94,7 @@ const VehiclesMarketplace = () => {
 
                 <div className="mb-4">
                   <span className="text-2xl font-bold text-blue-700">
-                    ${vehicle.price}
+                    ₦{vehicle.price}
                   </span>
                   <span className="text-stone-600 text-sm">/day</span>
                 </div>

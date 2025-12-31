@@ -125,7 +125,7 @@ const StorageMarketplace = () => {
 
                 <div className="mb-4">
                   <span className="text-2xl font-bold text-amber-700">
-                    ${storage.monthlyRate}
+                    ₦{storage.monthlyRate}
                   </span>
                   <span className="text-stone-600 text-sm">/month</span>
                 </div>

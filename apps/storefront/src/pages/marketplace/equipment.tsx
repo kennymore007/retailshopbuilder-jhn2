@@ -95,12 +95,12 @@ const EquipmentMarketplace = () => {
 
                 <div className="mb-4">
                   <span className="text-2xl font-bold text-orange-700">
-                    ${(equipment.price_amount / 100).toFixed(2)}
+                    ₦{(equipment.price_amount / 100).toFixed(2)}
                   </span>
                   <span className="text-stone-600 text-sm">/day</span>
                   {equipment.metadata?.weekly_rate && (
                     <span className="text-stone-400 text-sm ml-2">
-                      (${(equipment.metadata.weekly_rate / 100).toFixed(2)}/week)
+                      (₦{(equipment.metadata.weekly_rate / 100).toFixed(2)}/week)
                     </span>
                   )}
                 </div>
