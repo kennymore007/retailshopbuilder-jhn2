@@ -30,11 +30,22 @@ export const VendorLoginPage = () => {
     setError(null)
 
     try {
-      // Login using Medusa auth
-      const result = await sdk.auth.login("vendor", "emailpass", {
-        email: formData.email,
-        password: formData.password,
+      // Call auth endpoint directly to avoid session creation issues
+      const backendUrl = import.meta.env.VITE_MEDUSA_BACKEND_URL || "http://localhost:9000"
+      const response = await fetch(`${backendUrl}/auth/vendor/emailpass`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
       })
+
+      if (!response.ok) {
+        throw new Error("Invalid email or password")
+      }
 
       // Store vendor email in localStorage for dashboard
       localStorage.setItem("vendor_email", formData.email)
