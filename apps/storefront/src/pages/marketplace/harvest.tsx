@@ -1,4 +1,4 @@
-import { Link, useLocation } from "@tanstack/react-router"
+import { Link, useLocation, useLoaderData } from "@tanstack/react-router"
 import { getCountryCodeFromPath } from "@/lib/utils/region"
 import { useState, useMemo } from "react"
 
@@ -13,8 +13,19 @@ import { useState, useMemo } from "react"
  * - Farmer details
  */
 
-// Placeholder data - will be replaced with actual API calls
-const harvestListings = [
+type Listing = {
+  id: string
+  title: string
+  listing_type: string
+  price_amount: number
+  price_currency: string
+  quantity?: number
+  unit?: string
+  location?: string
+  metadata?: any
+}
+
+const placeholderListings = [
   {
     id: "1",
     title: "Premium Grade A Tomatoes",
@@ -71,6 +82,26 @@ const harvestListings = [
 const HarvestMarketplace = () => {
   const location = useLocation()
   const countryCode = getCountryCodeFromPath(location.pathname)
+  const { listings: rawListings } = useLoaderData({ from: '/$countryCode/marketplace/harvest' })
+  
+  // Transform API data to component format
+  const harvestListings = rawListings.map((listing: Listing) => ({
+    id: listing.id,
+    title: listing.title,
+    cropType: listing.metadata?.crop_type || 'Unknown',
+    grade: listing.metadata?.grade || 'N/A',
+    quantity: listing.quantity || 0,
+    unit: listing.unit || 'kg',
+    pricePerUnit: listing.price_amount / (listing.quantity || 1),
+    currency: listing.price_currency?.toUpperCase() || 'KES',
+    harvestDate: listing.metadata?.harvest_date || new Date().toISOString(),
+    farmerName: listing.metadata?.farmer_name || 'Unknown Farmer',
+    farmLocation: listing.location || 'Unknown Location',
+    gps: { lat: 0, lng: 0 },
+    status: listing.metadata?.status || 'Available',
+    verifiedBy: listing.metadata?.verified_by || 'Agent',
+    images: [],
+  }))
   
   // Filter state
   const [cropFilter, setCropFilter] = useState("all")

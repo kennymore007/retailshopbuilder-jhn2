@@ -14,8 +14,8 @@ import { Vendor } from "./vendor"
 export const Listing = model.define("listing", {
   id: model.id().primaryKey(),
   
-  // Marketplace identification
-  marketplace_type: model.enum([
+  // Listing type (which marketplace)
+  listing_type: model.enum([
     "harvest",
     "vehicle",
     "storage",
@@ -32,57 +32,20 @@ export const Listing = model.define("listing", {
   }),
   
   // Pricing
-  price_type: model.enum(["fixed", "hourly", "daily", "weekly", "monthly"]).default("fixed"),
-  base_price: model.bigNumber(), // Base price in cents
-  currency_code: model.text().default("usd"),
+  price_amount: model.number(),
+  price_currency: model.text().default("kes"),
   
-  // Availability
-  is_available: model.boolean().default(true),
-  availability_status: model.enum([
-    "available",
-    "reserved",
-    "rented",
-    "sold",
-    "maintenance",
-    "inactive"
-  ]).default("available"),
+  // Availability/Status
+  status: model.enum(["active", "inactive", "sold", "rented"]).default("active"),
   
   // Quantity (for harvest batches)
   quantity: model.number().nullable(),
-  unit: model.text().nullable(), // kg, tons, bags, etc.
+  unit: model.text().nullable(), // kg, tons, liters, etc.
   
-  // Location
-  location: model.json().nullable(), // GPS coordinates
+  // Location (city name or GPS)
+  location: model.text().nullable(),
   
-  // Harvest-specific fields (nullable for other types)
-  harvest_data: model.json().nullable(), // {crop_type, grade, harvest_date, farm_gps, farmer_name}
-  
-  // Vehicle-specific fields
-  vehicle_data: model.json().nullable(), // {type, capacity, make, model, year, plate_number}
-  
-  // Storage-specific fields
-  storage_data: model.json().nullable(), // {capacity, temperature_control, dimensions}
-  
-  // Equipment-specific fields
-  equipment_data: model.json().nullable(), // {equipment_type, brand, model, condition}
-  
-  // Media
-  images: model.array().nullable(), // Array of image URLs
-  
-  // Traceability (for harvest)
-  traceability_data: model.json().nullable(), // {agent_id, verification_date, quality_checks}
-  
-  // Status tracking
-  status: model.enum([
-    "draft",
-    "published",
-    "pending_verification",
-    "archived"
-  ]).default("draft"),
-  
-  published_at: model.dateTime().nullable(),
-  
-  // Metadata
+  // Metadata for specific marketplace data
   metadata: model.json().nullable(),
   
   // Relationships

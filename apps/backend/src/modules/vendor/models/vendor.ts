@@ -10,31 +10,33 @@ import { model } from "@medusajs/framework/utils"
  * - storage_operator: Rents storage space
  * - equipment_owner: Rents farm equipment
  * - logistics_provider: Provides transport services
+ * - buyer: Purchases harvest batches
+ * - agent: Intermediary between vendors and buyers
  */
 export const Vendor = model.define("vendor", {
   id: model.id().primaryKey(),
   
-  // Vendor identification
-  vendor_code: model.text().unique(), // e.g., VND-2025-00123
+  // Business identification
   business_name: model.text(),
-  vendor_type: model.enum([
+  email: model.text(),
+  phone_number: model.text().nullable(),
+  
+  // Actor type (role in marketplace)
+  actor_type: model.enum([
     "farmer",
     "gig_worker",
     "storage_operator",
     "equipment_owner",
-    "logistics_provider"
+    "logistics_provider",
+    "buyer",
+    "agent"
   ]),
   
-  // Contact & location
-  contact_person: model.text(),
-  phone: model.text(),
-  email: model.text(),
-  
-  // GPS location (stored as JSON: {lat, lng, address})
-  location: model.json().nullable(),
+  // Location (can be city name or GPS coordinates)
+  location: model.text().nullable(),
   
   // Verification status
-  is_verified: model.boolean().default(false),
+  verification_status: model.enum(["pending", "verified", "rejected"]).default("pending"),
   verification_date: model.dateTime().nullable(),
   
   // Business details
@@ -42,7 +44,7 @@ export const Vendor = model.define("vendor", {
   tax_id: model.text().nullable(),
   
   // Financial
-  bank_account: model.json().nullable(), // {account_name, account_number, bank_name, routing}
+  bank_account: model.json().nullable(),
   
   // Status
   is_active: model.boolean().default(true),

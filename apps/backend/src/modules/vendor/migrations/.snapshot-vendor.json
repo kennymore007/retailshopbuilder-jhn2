@@ -15,51 +15,8 @@
           "nullable": false,
           "mappedType": "text"
         },
-        "vendor_code": {
-          "name": "vendor_code",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "text"
-        },
         "business_name": {
           "name": "business_name",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "text"
-        },
-        "vendor_type": {
-          "name": "vendor_type",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "enumItems": [
-            "farmer",
-            "gig_worker",
-            "storage_operator",
-            "equipment_owner",
-            "logistics_provider"
-          ],
-          "mappedType": "enum"
-        },
-        "contact_person": {
-          "name": "contact_person",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "text"
-        },
-        "phone": {
-          "name": "phone",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
@@ -76,24 +33,56 @@
           "nullable": false,
           "mappedType": "text"
         },
-        "location": {
-          "name": "location",
-          "type": "jsonb",
+        "phone_number": {
+          "name": "phone_number",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "mappedType": "json"
+          "mappedType": "text"
         },
-        "is_verified": {
-          "name": "is_verified",
-          "type": "boolean",
+        "actor_type": {
+          "name": "actor_type",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "default": "false",
-          "mappedType": "boolean"
+          "enumItems": [
+            "farmer",
+            "gig_worker",
+            "storage_operator",
+            "equipment_owner",
+            "logistics_provider",
+            "buyer",
+            "agent"
+          ],
+          "mappedType": "enum"
+        },
+        "location": {
+          "name": "location",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "text"
+        },
+        "verification_status": {
+          "name": "verification_status",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "'pending'",
+          "enumItems": [
+            "pending",
+            "verified",
+            "rejected"
+          ],
+          "mappedType": "enum"
         },
         "verification_date": {
           "name": "verification_date",
@@ -188,15 +177,6 @@
       "schema": "public",
       "indexes": [
         {
-          "keyName": "IDX_vendor_vendor_code_unique",
-          "columnNames": [],
-          "composite": false,
-          "constraint": false,
-          "primary": false,
-          "unique": false,
-          "expression": "CREATE UNIQUE INDEX IF NOT EXISTS \"IDX_vendor_vendor_code_unique\" ON \"vendor\" (\"vendor_code\") WHERE deleted_at IS NULL"
-        },
-        {
           "keyName": "IDX_vendor_deleted_at",
           "columnNames": [],
           "composite": false,
@@ -231,8 +211,8 @@
           "nullable": false,
           "mappedType": "text"
         },
-        "marketplace_type": {
-          "name": "marketplace_type",
+        "listing_type": {
+          "name": "listing_type",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
@@ -273,67 +253,38 @@
           "nullable": false,
           "mappedType": "text"
         },
-        "price_type": {
-          "name": "price_type",
+        "price_amount": {
+          "name": "price_amount",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "price_currency": {
+          "name": "price_currency",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "default": "'fixed'",
-          "enumItems": [
-            "fixed",
-            "hourly",
-            "daily",
-            "weekly",
-            "monthly"
-          ],
-          "mappedType": "enum"
-        },
-        "base_price": {
-          "name": "base_price",
-          "type": "numeric",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "decimal"
-        },
-        "currency_code": {
-          "name": "currency_code",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "default": "'usd'",
+          "default": "'kes'",
           "mappedType": "text"
         },
-        "is_available": {
-          "name": "is_available",
-          "type": "boolean",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "default": "true",
-          "mappedType": "boolean"
-        },
-        "availability_status": {
-          "name": "availability_status",
+        "status": {
+          "name": "status",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "default": "'available'",
+          "default": "'active'",
           "enumItems": [
-            "available",
-            "reserved",
-            "rented",
+            "active",
+            "inactive",
             "sold",
-            "maintenance",
-            "inactive"
+            "rented"
           ],
           "mappedType": "enum"
         },
@@ -357,92 +308,12 @@
         },
         "location": {
           "name": "location",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "json"
-        },
-        "harvest_data": {
-          "name": "harvest_data",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "json"
-        },
-        "vehicle_data": {
-          "name": "vehicle_data",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "json"
-        },
-        "storage_data": {
-          "name": "storage_data",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "json"
-        },
-        "equipment_data": {
-          "name": "equipment_data",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "json"
-        },
-        "images": {
-          "name": "images",
-          "type": "text[]",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "array"
-        },
-        "traceability_data": {
-          "name": "traceability_data",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "json"
-        },
-        "status": {
-          "name": "status",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
-          "default": "'draft'",
-          "enumItems": [
-            "draft",
-            "published",
-            "pending_verification",
-            "archived"
-          ],
-          "mappedType": "enum"
-        },
-        "published_at": {
-          "name": "published_at",
-          "type": "timestamptz",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
           "nullable": true,
-          "length": 6,
-          "mappedType": "datetime"
+          "mappedType": "text"
         },
         "metadata": {
           "name": "metadata",
@@ -451,15 +322,6 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "mappedType": "json"
-        },
-        "raw_base_price": {
-          "name": "raw_base_price",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
           "mappedType": "json"
         },
         "created_at": {
