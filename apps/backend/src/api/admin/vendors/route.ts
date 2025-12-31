@@ -1,12 +1,32 @@
-import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
+import type {
+  AuthenticatedMedusaRequest,
+  MedusaResponse,
+} from "@medusajs/framework/http"
+import VendorModuleService from "../../../modules/vendor/service"
 
-export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
-  const query = req.scope.resolve("query")
-  
-  const { data: vendors } = await query.graph({
-    entity: "vendor",
-    fields: ["id", "name", "email", "status", "created_at"],
+export const GET = async (
+  req: AuthenticatedMedusaRequest,
+  res: MedusaResponse
+) => {
+  const vendorModuleService: VendorModuleService = req.scope.resolve("vendor")
+
+  const { limit = 20, offset = 0, status } = req.query
+
+  const filters: any = {}
+  if (status) {
+    filters.verification_status = status
+  }
+
+  const [vendors, count] = await vendorModuleService.listAndCountVendors(filters, {
+    skip: Number(offset),
+    take: Number(limit),
+    order: { created_at: "DESC" },
   })
-  
-  res.json({ vendors })
+
+  res.json({
+    vendors,
+    count,
+    limit: Number(limit),
+    offset: Number(offset),
+  })
 }
