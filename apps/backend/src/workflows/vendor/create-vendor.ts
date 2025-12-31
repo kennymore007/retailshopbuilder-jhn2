@@ -1,5 +1,6 @@
 import { createWorkflow, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
+import { Modules } from "@medusajs/framework/utils"
 
 export type CreateVendorInput = {
   email: string
@@ -15,27 +16,23 @@ export type CreateVendorInput = {
 const createAuthIdentityStep = createStep(
   "create-auth-identity-step",
   async (input: CreateVendorInput, { container }) => {
-    const authModule = container.resolve("auth_identity")
+    const authModuleService = container.resolve(Modules.AUTH)
     
-    // Create auth identity for vendor
-    const authIdentity = await authModule.createAuthIdentities({
-      entity_id: input.email,
-      provider: "emailpass",
-      provider_metadata: {
-        password: input.password
-      },
-      app_metadata: {
-        actor_type: "vendor"
+    // Register vendor with email and password
+    const authResponse = await authModuleService.register("emailpass", {
+      body: {
+        email: input.email,
+        password: input.password,
       }
-    })
+    } as any)
 
-    return new StepResponse(authIdentity, authIdentity.id)
+    return new StepResponse(authResponse, authResponse.auth_identity?.id)
   },
   async (authIdentityId, { container }) => {
     if (!authIdentityId) return
     
-    const authModule = container.resolve("auth_identity")
-    await authModule.deleteAuthIdentities(authIdentityId)
+    const authModuleService = container.resolve(Modules.AUTH)
+    await authModuleService.deleteAuthIdentities(authIdentityId)
   }
 )
 
