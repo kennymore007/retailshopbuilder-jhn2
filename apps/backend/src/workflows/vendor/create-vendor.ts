@@ -1,6 +1,7 @@
 import { createWorkflow, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { Modules } from "@medusajs/framework/utils"
+import { setAuthAppMetadataStep } from "@medusajs/medusa/core-flows"
 
 export type CreateVendorInput = {
   email: string
@@ -39,7 +40,7 @@ const createAuthIdentityStep = createStep(
 const createVendorStep = createStep(
   "create-vendor-step",
   async (input: CreateVendorInput, { container }) => {
-    const vendorModule = container.resolve("vendor")
+    const vendorModule = container.resolve("vendorModuleService")
     
     const vendor = await vendorModule.createVendors({
       email: input.email,
@@ -56,7 +57,7 @@ const createVendorStep = createStep(
   async (vendorId, { container }) => {
     if (!vendorId) return
     
-    const vendorModule = container.resolve("vendor")
+    const vendorModule = container.resolve("vendorModuleService")
     await vendorModule.deleteVendors(vendorId)
   }
 )
@@ -66,6 +67,14 @@ export const createVendorWorkflow = createWorkflow(
   (input: CreateVendorInput) => {
     const authIdentity = createAuthIdentityStep(input)
     const vendor = createVendorStep(input)
+    
+    // Link vendor to auth identity via app_metadata (Medusa recommended pattern)
+    setAuthAppMetadataStep({
+      authIdentityId: authIdentity.auth_identity.id,
+      actorType: "vendor",
+      value: vendor.id,
+    })
+    
     return new WorkflowResponse({ vendor, authIdentity })
   }
 )
