@@ -1,5 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router"
 import { getCountryCodeFromPath } from "@/lib/utils/region"
+import { useState, useMemo } from "react"
 
 const equipmentListings = [
   {
@@ -41,6 +42,22 @@ const equipmentListings = [
 const EquipmentMarketplace = () => {
   const location = useLocation()
   const countryCode = getCountryCodeFromPath(location.pathname)
+  
+  const [typeFilter, setTypeFilter] = useState("all")
+  const [locationFilter, setLocationFilter] = useState("all")
+  const [sortBy, setSortBy] = useState("price-low")
+  
+  const filteredListings = useMemo(() => {
+    let filtered = [...equipmentListings]
+    if (typeFilter !== "all") filtered = filtered.filter(e => e.type === typeFilter)
+    if (locationFilter !== "all") filtered = filtered.filter(e => e.location === locationFilter)
+    
+    switch (sortBy) {
+      case "price-high": filtered.sort((a, b) => b.dailyRate - a.dailyRate); break
+      default: filtered.sort((a, b) => a.dailyRate - b.dailyRate)
+    }
+    return filtered
+  }, [typeFilter, locationFilter, sortBy])
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -59,25 +76,32 @@ const EquipmentMarketplace = () => {
       <div className="bg-white border-b border-stone-200 py-6">
         <div className="content-container">
           <div className="flex flex-wrap gap-4">
-            <select className="px-4 py-2 border border-stone-300 bg-white">
-              <option>All Equipment Types</option>
-              <option>Tractor</option>
-              <option>Tiller</option>
-              <option>Harvester</option>
-              <option>Planter</option>
+            <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="px-4 py-2 border border-stone-300 bg-white">
+              <option value="all">All Equipment Types</option>
+              <option value="Tractor">Tractor</option>
+              <option value="Tiller">Tiller</option>
+              <option value="Harvester">Harvester</option>
+              <option value="Planter">Planter</option>
             </select>
-            <select className="px-4 py-2 border border-stone-300 bg-white">
-              <option>All Locations</option>
-              <option>Nakuru</option>
-              <option>Eldoret</option>
+            <select value={locationFilter} onChange={(e) => setLocationFilter(e.target.value)} className="px-4 py-2 border border-stone-300 bg-white">
+              <option value="all">All Locations</option>
+              <option value="Nakuru">Nakuru</option>
+              <option value="Eldoret">Eldoret</option>
             </select>
+            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="px-4 py-2 border border-stone-300 bg-white">
+              <option value="price-low">Sort by: Daily Rate (Low)</option>
+              <option value="price-high">Daily Rate (High)</option>
+            </select>
+            <div className="flex items-center px-4 py-2 bg-stone-100 text-stone-700 font-mono text-sm">
+              {filteredListings.length} {filteredListings.length === 1 ? 'item' : 'items'}
+            </div>
           </div>
         </div>
       </div>
 
       <div className="content-container py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {equipmentListings.map((equipment) => (
+          {filteredListings.map((equipment) => (
             <div
               key={equipment.id}
               className="bg-white border border-stone-200 hover:border-orange-400 hover:shadow-lg transition-all"

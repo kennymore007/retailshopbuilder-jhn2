@@ -1,5 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router"
 import { getCountryCodeFromPath } from "@/lib/utils/region"
+import { useState, useMemo } from "react"
 
 /**
  * Harvest Marketplace - Farm Produce
@@ -70,6 +71,46 @@ const harvestListings = [
 const HarvestMarketplace = () => {
   const location = useLocation()
   const countryCode = getCountryCodeFromPath(location.pathname)
+  
+  // Filter state
+  const [cropFilter, setCropFilter] = useState("all")
+  const [gradeFilter, setGradeFilter] = useState("all")
+  const [locationFilter, setLocationFilter] = useState("all")
+  const [sortBy, setSortBy] = useState("latest")
+  
+  // Filtered and sorted listings
+  const filteredListings = useMemo(() => {
+    let filtered = [...harvestListings]
+    
+    // Apply filters
+    if (cropFilter !== "all") {
+      filtered = filtered.filter(l => l.cropType.toLowerCase() === cropFilter.toLowerCase())
+    }
+    if (gradeFilter !== "all") {
+      filtered = filtered.filter(l => l.grade === gradeFilter)
+    }
+    if (locationFilter !== "all") {
+      filtered = filtered.filter(l => l.farmLocation === locationFilter)
+    }
+    
+    // Apply sorting
+    switch (sortBy) {
+      case "price-low":
+        filtered.sort((a, b) => a.pricePerUnit - b.pricePerUnit)
+        break
+      case "price-high":
+        filtered.sort((a, b) => b.pricePerUnit - a.pricePerUnit)
+        break
+      case "quantity":
+        filtered.sort((a, b) => b.quantity - a.quantity)
+        break
+      case "latest":
+      default:
+        filtered.sort((a, b) => new Date(b.harvestDate).getTime() - new Date(a.harvestDate).getTime())
+    }
+    
+    return filtered
+  }, [cropFilter, gradeFilter, locationFilter, sortBy])
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -91,33 +132,54 @@ const HarvestMarketplace = () => {
       <div className="bg-white border-b border-stone-200 py-6">
         <div className="content-container">
           <div className="flex flex-wrap gap-4">
-            <select className="px-4 py-2 border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-green-500">
-              <option>All Crops</option>
-              <option>Tomatoes</option>
-              <option>Maize</option>
-              <option>Cabbage</option>
-              <option>Potatoes</option>
+            <select 
+              value={cropFilter}
+              onChange={(e) => setCropFilter(e.target.value)}
+              className="px-4 py-2 border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="all">All Crops</option>
+              <option value="tomatoes">Tomatoes</option>
+              <option value="maize">Maize</option>
+              <option value="cabbage">Cabbage</option>
+              <option value="potatoes">Potatoes</option>
             </select>
             
-            <select className="px-4 py-2 border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-green-500">
-              <option>All Grades</option>
-              <option>Grade A</option>
-              <option>Grade B</option>
+            <select 
+              value={gradeFilter}
+              onChange={(e) => setGradeFilter(e.target.value)}
+              className="px-4 py-2 border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="all">All Grades</option>
+              <option value="A">Grade A</option>
+              <option value="B">Grade B</option>
             </select>
             
-            <select className="px-4 py-2 border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-green-500">
-              <option>All Locations</option>
-              <option>Kiambu County</option>
-              <option>Nakuru County</option>
-              <option>Kisumu County</option>
+            <select 
+              value={locationFilter}
+              onChange={(e) => setLocationFilter(e.target.value)}
+              className="px-4 py-2 border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="all">All Locations</option>
+              <option value="Kiambu County">Kiambu County</option>
+              <option value="Nakuru County">Nakuru County</option>
+              <option value="Kisumu County">Kisumu County</option>
             </select>
 
-            <select className="px-4 py-2 border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-green-500">
-              <option>Sort by: Latest</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-              <option>Quantity: High to Low</option>
+            <select 
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="px-4 py-2 border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="latest">Sort by: Latest</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="quantity">Quantity: High to Low</option>
             </select>
+            
+            {/* Results count */}
+            <div className="flex items-center px-4 py-2 bg-stone-100 text-stone-700 font-mono text-sm">
+              {filteredListings.length} {filteredListings.length === 1 ? 'listing' : 'listings'}
+            </div>
           </div>
         </div>
       </div>
@@ -125,7 +187,7 @@ const HarvestMarketplace = () => {
       {/* Listings Grid */}
       <div className="content-container py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {harvestListings.map((listing) => (
+          {filteredListings.map((listing) => (
             <div
               key={listing.id}
               className="bg-white border border-stone-200 hover:border-green-400 hover:shadow-lg transition-all"
@@ -208,15 +270,26 @@ const HarvestMarketplace = () => {
         </div>
 
         {/* Empty state or pagination would go here */}
-        {harvestListings.length === 0 && (
+        {filteredListings.length === 0 && (
           <div className="text-center py-16">
             <span className="text-6xl block mb-4">🌾</span>
             <h3 className="text-xl font-bold text-stone-900 mb-2">
               No harvest batches found
             </h3>
-            <p className="text-stone-600">
+            <p className="text-stone-600 mb-4">
               Try adjusting your filters or check back later for new listings.
             </p>
+            <button 
+              onClick={() => {
+                setCropFilter("all")
+                setGradeFilter("all")
+                setLocationFilter("all")
+                setSortBy("latest")
+              }}
+              className="px-6 py-2 bg-green-700 text-white font-semibold hover:bg-green-800 transition-colors"
+            >
+              Clear All Filters
+            </button>
           </div>
         )}
       </div>

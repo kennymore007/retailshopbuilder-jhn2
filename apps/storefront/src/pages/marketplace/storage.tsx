@@ -1,5 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router"
 import { getCountryCodeFromPath } from "@/lib/utils/region"
+import { useState, useMemo } from "react"
 
 const storageListings = [
   {
@@ -37,6 +38,23 @@ const storageListings = [
 const StorageMarketplace = () => {
   const location = useLocation()
   const countryCode = getCountryCodeFromPath(location.pathname)
+  
+  const [typeFilter, setTypeFilter] = useState("all")
+  const [locationFilter, setLocationFilter] = useState("all")
+  const [sortBy, setSortBy] = useState("price-low")
+  
+  const filteredListings = useMemo(() => {
+    let filtered = [...storageListings]
+    if (typeFilter !== "all") filtered = filtered.filter(s => s.type === typeFilter)
+    if (locationFilter !== "all") filtered = filtered.filter(s => s.location === locationFilter)
+    
+    switch (sortBy) {
+      case "price-high": filtered.sort((a, b) => b.dailyRate - a.dailyRate); break
+      case "capacity": filtered.sort((a, b) => parseInt(b.capacity) - parseInt(a.capacity)); break
+      default: filtered.sort((a, b) => a.dailyRate - b.dailyRate)
+    }
+    return filtered
+  }, [typeFilter, locationFilter, sortBy])
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -55,24 +73,32 @@ const StorageMarketplace = () => {
       <div className="bg-white border-b border-stone-200 py-6">
         <div className="content-container">
           <div className="flex flex-wrap gap-4">
-            <select className="px-4 py-2 border border-stone-300 bg-white">
-              <option>All Storage Types</option>
-              <option>Cold Storage</option>
-              <option>Dry Warehouse</option>
-              <option>Refrigerated</option>
+            <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="px-4 py-2 border border-stone-300 bg-white">
+              <option value="all">All Storage Types</option>
+              <option value="Cold Storage">Cold Storage</option>
+              <option value="Dry Warehouse">Dry Warehouse</option>
+              <option value="Refrigerated">Refrigerated</option>
             </select>
-            <select className="px-4 py-2 border border-stone-300 bg-white">
-              <option>All Locations</option>
-              <option>Nairobi</option>
-              <option>Thika</option>
+            <select value={locationFilter} onChange={(e) => setLocationFilter(e.target.value)} className="px-4 py-2 border border-stone-300 bg-white">
+              <option value="all">All Locations</option>
+              <option value="Nairobi">Nairobi</option>
+              <option value="Thika">Thika</option>
             </select>
+            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="px-4 py-2 border border-stone-300 bg-white">
+              <option value="price-low">Sort by: Daily Rate (Low)</option>
+              <option value="price-high">Daily Rate (High)</option>
+              <option value="capacity">Capacity</option>
+            </select>
+            <div className="flex items-center px-4 py-2 bg-stone-100 text-stone-700 font-mono text-sm">
+              {filteredListings.length} {filteredListings.length === 1 ? 'facility' : 'facilities'}
+            </div>
           </div>
         </div>
       </div>
 
       <div className="content-container py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {storageListings.map((storage) => (
+          {filteredListings.map((storage) => (
             <div
               key={storage.id}
               className="bg-white border border-stone-200 hover:border-amber-400 hover:shadow-lg transition-all"
