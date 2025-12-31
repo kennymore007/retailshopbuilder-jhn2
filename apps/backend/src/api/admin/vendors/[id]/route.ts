@@ -4,10 +4,10 @@ import type {
 } from "@medusajs/framework/http"
 import VendorModuleService from "../../../../modules/vendor/service"
 
-export async function GET(
+export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
-) {
+) => {
   const query = req.scope.resolve("query")
   const { id } = req.params
 
@@ -36,23 +36,26 @@ export async function GET(
   res.json({ vendor })
 }
 
-export async function PUT(
+export const PUT = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
-) {
+) => {
   const vendorModuleService: VendorModuleService = 
     req.scope.resolve("vendorModuleService")
   const { id } = req.params
 
-  const vendor = await vendorModuleService.updateVendors(id, req.body)
+  const [vendor] = await vendorModuleService.updateVendors({
+    id,
+    ...req.body
+  })
 
   res.json({ vendor })
 }
 
-export async function DELETE(
+export const DELETE = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
-) {
+) => {
   const vendorModuleService: VendorModuleService = 
     req.scope.resolve("vendorModuleService")
   const { id } = req.params

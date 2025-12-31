@@ -4,15 +4,16 @@ import type {
 } from "@medusajs/framework/http"
 import VendorModuleService from "../../../../../modules/vendor/service"
 
-export async function POST(
+export const POST = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
-) {
+) => {
   const vendorModuleService: VendorModuleService = 
     req.scope.resolve("vendorModuleService")
   const { id } = req.params
 
-  const vendor = await vendorModuleService.updateVendors(id, {
+  const [vendor] = await vendorModuleService.updateVendors({
+    id,
     verification_status: "verified",
     is_active: true,
   })
