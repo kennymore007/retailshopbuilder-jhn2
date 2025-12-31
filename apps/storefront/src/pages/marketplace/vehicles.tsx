@@ -1,64 +1,29 @@
-import { Link, useLocation } from "@tanstack/react-router"
+import { Link, useLocation, useRouteContext } from "@tanstack/react-router"
 import { getCountryCodeFromPath } from "@/lib/utils/region"
 import { useState, useMemo } from "react"
-
-const vehicleListings = [
-  {
-    id: "1",
-    title: "Isuzu NQR Truck - 3 Ton Capacity",
-    type: "Truck",
-    capacity: "3 Tons",
-    make: "Isuzu",
-    model: "NQR",
-    year: 2020,
-    plateNumber: "KCA 123A",
-    dailyRate: 50,
-    hourlyRate: 8,
-    currency: "USD",
-    location: "Nairobi",
-    ownerName: "James Mwangi",
-    available: true,
-    features: ["GPS Tracking", "Refrigerated", "Tail Lift"],
-  },
-  {
-    id: "2",
-    title: "Toyota Hilux Pickup - 1 Ton",
-    type: "Pickup",
-    capacity: "1 Ton",
-    make: "Toyota",
-    model: "Hilux",
-    year: 2019,
-    plateNumber: "KBZ 456B",
-    dailyRate: 35,
-    hourlyRate: 6,
-    currency: "USD",
-    location: "Kiambu",
-    ownerName: "Sarah Njeri",
-    available: true,
-    features: ["4WD", "GPS Tracking"],
-  },
-]
+import { Route } from "@/routes/$countryCode/marketplace/vehicles"
 
 const VehiclesMarketplace = () => {
   const location = useLocation()
   const countryCode = getCountryCodeFromPath(location.pathname)
+  const { listings = [] } = Route.useLoaderData()
   
   const [typeFilter, setTypeFilter] = useState("all")
   const [locationFilter, setLocationFilter] = useState("all")
   const [sortBy, setSortBy] = useState("price-low")
   
   const filteredListings = useMemo(() => {
-    let filtered = [...vehicleListings]
-    if (typeFilter !== "all") filtered = filtered.filter(v => v.type === typeFilter)
-    if (locationFilter !== "all") filtered = filtered.filter(v => v.location === locationFilter)
+    let filtered = [...listings]
+    if (typeFilter !== "all") filtered = filtered.filter((v: any) => v.metadata?.type === typeFilter)
+    if (locationFilter !== "all") filtered = filtered.filter((v: any) => v.location === locationFilter)
     
     switch (sortBy) {
-      case "price-high": filtered.sort((a, b) => b.dailyRate - a.dailyRate); break
-      case "capacity": filtered.sort((a, b) => parseInt(b.capacity) - parseInt(a.capacity)); break
-      default: filtered.sort((a, b) => a.dailyRate - b.dailyRate)
+      case "price-high": filtered.sort((a: any, b: any) => b.price - a.price); break
+      case "capacity": filtered.sort((a: any, b: any) => parseInt(b.metadata?.capacity || "0") - parseInt(a.metadata?.capacity || "0")); break
+      default: filtered.sort((a: any, b: any) => a.price - b.price)
     }
     return filtered
-  }, [typeFilter, locationFilter, sortBy])
+  }, [listings, typeFilter, locationFilter, sortBy])
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -102,7 +67,7 @@ const VehiclesMarketplace = () => {
 
       <div className="content-container py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredListings.map((vehicle) => (
+          {filteredListings.map((vehicle: any) => (
             <div
               key={vehicle.id}
               className="bg-white border border-stone-200 hover:border-blue-400 hover:shadow-lg transition-all"
@@ -114,12 +79,12 @@ const VehiclesMarketplace = () => {
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <span className={`px-2 py-1 text-xs font-semibold ${
-                    vehicle.available ? "bg-green-100 text-green-800" : "bg-stone-100 text-stone-600"
+                    vehicle.status === "active" ? "bg-green-100 text-green-800" : "bg-stone-100 text-stone-600"
                   }`}>
-                    {vehicle.available ? "Available" : "Booked"}
+                    {vehicle.status === "active" ? "Available" : "Booked"}
                   </span>
                   <span className="px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800">
-                    {vehicle.type}
+                    {vehicle.metadata?.type || "Vehicle"}
                   </span>
                 </div>
 
@@ -129,27 +94,26 @@ const VehiclesMarketplace = () => {
 
                 <div className="mb-4">
                   <span className="text-2xl font-bold text-blue-700">
-                    ${vehicle.dailyRate}
+                    ${vehicle.price}
                   </span>
                   <span className="text-stone-600 text-sm">/day</span>
-                  <span className="text-stone-400 text-sm ml-2">
-                    (${vehicle.hourlyRate}/hr)
-                  </span>
                 </div>
 
                 <div className="space-y-2 text-sm text-stone-600 mb-4">
                   <div className="flex items-start gap-2">
                     <span className="font-semibold min-w-[80px]">Capacity:</span>
-                    <span>{vehicle.capacity}</span>
+                    <span>{vehicle.metadata?.capacity || "N/A"}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="font-semibold min-w-[80px]">Location:</span>
                     <span>{vehicle.location}</span>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <span className="font-semibold min-w-[80px]">Features:</span>
-                    <span>{vehicle.features.join(", ")}</span>
-                  </div>
+                  {vehicle.metadata?.features && (
+                    <div className="flex items-start gap-2">
+                      <span className="font-semibold min-w-[80px]">Features:</span>
+                      <span>{vehicle.metadata.features}</span>
+                    </div>
+                  )}
                 </div>
 
                 <a

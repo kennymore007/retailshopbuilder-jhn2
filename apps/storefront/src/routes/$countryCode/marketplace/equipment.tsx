@@ -1,8 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router"
 import EquipmentMarketplace from "@/pages/marketplace/equipment"
+import { sdk } from "@/lib/utils/sdk"
 
 export const Route = createFileRoute("/$countryCode/marketplace/equipment")({
   component: EquipmentMarketplace,
+  loader: async () => {
+    const response: any = await sdk.client.fetch("/store/listings?listing_type=equipment")
+    return { listings: response.listings || [] }
+  },
   head: () => ({
     meta: [
       {
