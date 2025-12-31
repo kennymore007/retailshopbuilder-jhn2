@@ -374,8 +374,4 @@ const VendorDetailPage = () => {
   )
 }
 
-export const config = defineRouteConfig({
-  label: "Vendor Details",
-})
-
 export default VendorDetailPage

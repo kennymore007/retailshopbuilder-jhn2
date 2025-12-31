@@ -1,6 +1,6 @@
 import { defineRouteConfig } from "@medusajs/admin-sdk"
 import { Container, Heading, Badge, Table, Button } from "@medusajs/ui"
-import { PencilSquare, Trash, CheckCircleSolid, XCircleSolid } from "@medusajs/icons"
+import { PencilSquare, Trash, CheckCircleSolid, XCircleSolid, Buildings } from "@medusajs/icons"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -273,7 +273,6 @@ const VendorsPage = () => {
 
 export const config = defineRouteConfig({
   label: "Vendors",
-  icon: <CheckCircleSolid />,
 })
 
 export default VendorsPage
