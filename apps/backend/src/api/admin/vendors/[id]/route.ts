@@ -40,14 +40,11 @@ export const PUT = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
 ) => {
-  const vendorModuleService: VendorModuleService = 
-    req.scope.resolve("vendorModuleService")
+  const vendorModuleService: VendorModuleService =
+    req.scope.resolve("vendor")
   const { id } = req.params
 
-  const [vendor] = await vendorModuleService.updateVendors({
-    id,
-    ...req.body
-  })
+  const vendor = await vendorModuleService.updateVendors(id, req.body)
 
   res.json({ vendor })
 }
@@ -56,8 +53,8 @@ export const DELETE = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
 ) => {
-  const vendorModuleService: VendorModuleService = 
-    req.scope.resolve("vendorModuleService")
+  const vendorModuleService: VendorModuleService =
+    req.scope.resolve("vendor")
   const { id } = req.params
 
   await vendorModuleService.deleteVendors(id)
