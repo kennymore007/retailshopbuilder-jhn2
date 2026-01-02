@@ -9,7 +9,7 @@ export default defineMiddlewares({
     {
       matcher: "/admin/vendors*",
       middlewares: [
-        authenticate("admin", ["session", "bearer"]),
+        authenticate("user", ["session", "bearer"]),
       ],
     },
     // Vendor registration - allow unregistered auth identities
