@@ -8,7 +8,7 @@ export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
 ) => {
-  const vendorModuleService: VendorModuleService = req.scope.resolve("vendor")
+  const vendorModuleService: VendorModuleService = req.scope.resolve("vendorModuleService")
 
   const { limit = 20, offset = 0, status } = req.query
 
